@@ -1,44 +1,33 @@
-var email= document.getElementById('field1')
+var email= document.getElementById('exampleInputEmail1')
+var email2= document.getElementById('exampleInputEmail2')
 var err1= document.getElementById('err1')
-var pwd= document.getElementById('field2')
-var err2= document.getElementById('"showHide')
-var number= document.getElementById('field3')
+var number= document.getElementById("exampleInputMobileNumber1")
 var err3= document.getElementById('err3')
-var regex= /^([A-Z a-z 0-9 \-#_.]+)@([A-z a-z 0-9\-]+).([a-z]{2,3}).([a-z]{2,3})?$/
+var pwd= document.getElementById('pwd')
+var cpwd= document.getElementById('cpwd')
+var err2= document.getElementById('err2')
+var err4= document.getElementById('err4')
+var err5= document.getElementById('err5')
+var pwd2= document.getElementById('exampleInputPassword2')
+var regex= /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
 var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-var pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+var passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+var poorRegExp = /[a-z]/;
+var weakRegExp = /(?=.*?[0-9])/;;
+var strongRegExp = /(?=.*?[#?!@$%^&*-])/;
 
-
-function validateEmail(){
-               // alert('hello')
-               if(email.value.trim()==''){
-                err1.innerText='Field cannot be empty';
-                email.style.border= '1px solid red'
-                return false
-               }
-               else if(!email.value.match(regex)){
-                err1.innerText='Email is not in correct format';
-                email.style.border= '1px solid red'
-                return false
-               }
-               else {
-                err1.innerText='';
-                email.style.border= '3px solid green'
-                return true
-               }               
-
-}
 function validatepnumber()
 {
     if(number.value.trim()==''){
         err3.innerText='Field cannot be empty';
-        number.style.border= '1px solid red'
+        number.style.border= '3px solid red'
         return false
        }
   
        else if(!number.value.match(phoneno)) {
        err3.innerText='Phone Number is not in correct format';
-       number.style.border= '1px solid red'
+       number.style.border= '3px solid red'
              
             return false;
               }
@@ -53,123 +42,151 @@ function validatepnumber()
 }
 
 
-function validatePass(){
-    // alert('hello')
+
+function validatePass()
+{
     if(pwd.value.trim()==''){
-     err2.innerText='Field cannot be empty';
-     pwd.style.border= '1px solid red'
-     return false
-    }
-    else if (!pwd.value.match(pattern))
-    {
-        err2.innerText='Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters';
-     pwd.style.border= '1px solid red'
-     return false
-    }
-    else{
-        err2.innerText='';
-     pwd.style.border= '3px solid green'  
-     return true
-    }
-}
-function verify(){
-    if(!validateEmail()||!validatePass()){
+        err2.innerText='Field cannot be empty';
+        pwd.style.border= '3px solid red'
         return false
-    }
-    else{
-        return true
-    }
-}
-
-let passwordInput = document.querySelector('#passwordInput input[type="password"]');
-let passwordStrength= document.getElementById('passwordStrength');
-let poor = document.querySelector('#passwordStrength #poor');
-let weak = document.querySelector('#passwordStrength #weak');
-let strong = document.querySelector('#passwordStrength #strong');
-let passwordInfo = document.getElementById('passwordInfo');
-
-let poorRegExp = /[a-z]/;
-let weakRegExp = /(?=.*?[0-9])/;;
-let strongRegExp = /(?=.*?[#?!@$%^&*-])/;
-let whitespaceRegExp = /^$|\s+/;
-passwordInput.oninput= function(){
-
-     let passwordValue= passwordInput.value;
-     let passwordLength= passwordValue.length;
-     let poorPassword= passwordValue.match(poorRegExp);
-     let weakPassword= passwordValue.match(weakRegExp);
-     let strongPassword= passwordValue.match(strongRegExp);
-     let whitespace= passwordValue.match(whitespaceRegExp);
-if(passwordValue != ""){
- passwordStrength.style.display = "block";
- passwordStrength.style.display = "flex";
- passwordInfo.style.display = "block";
- passwordInfo.style.color = "black";
- if(whitespace)
- {
-  passwordInfo.textContent = "whitespaces are not allowed";
- }else{
- poorPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword);
- weakPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword);
- strongPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword);
-}
- 
-}else{
- 
- passwordStrength.style.display = "none";
- passwordInfo.style.display = "none";
-
-}
-}
-function poorPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword){
-  if(passwordLength <= 3 && (poorPassword || weakPassword || strongPassword))
-    {
-   poor.classList.add("active");
-   passwordInfo.style.display = "block";
-   passwordInfo.style.color = "red";
-   passwordInfo.textContent = "Your password is too Poor";
-      
-    }
-}
-function weakPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword){
-if(passwordLength>= 4 && poorPassword && (weakPassword || strongPassword))
-{
- weak.classList.add("active");
- passwordInfo.textContent = "Your password is Weak";
- passwordInfo.style.color = "orange";
-
-}else{
- weak.classList.remove("active");
- 
-}
-}
-function strongPasswordStrength(passwordLength, poorPassword, weakPassword, strongPassword){
-if(passwordLength >= 6 && (poorPassword && weakPassword) && strongPassword)
-{
- poor.classList.add("active");
- weak.classList.add("active");
- strong.classList.add("active");
- passwordInfo.textContent = "Your password is strong";
- passwordInfo.style.color = "green";
-}else{
- strong.classList.remove("active");
- 
-}
-}
-let showHide = document.querySelector('#passwordInput #showHide');
-showHide.onclick = function(){
-  showHidePassword()
-}
-function showHidePassword(){
-if(passwordInput.type == "password"){
-passwordInput.type = "text";
-showHide.textContent = "HIDE";
-showHide.style.color = "green";
-}else{
-passwordInput.type = "password";
-showHide.textContent = "SHOW";
-showHide.style.color = "red";
-}
-}
+       }
   
+       else if(!pwd.value.match(passwordRegex)) {
+       err2.innerText='Minimum 8 characters, at least one uppercase, and one lower case, must contain at least one number';
+       pwd.style.border= '3px solid red'
+             
+            return false;
+              }
+            else
+              {
+                err2.innerText='';
+                pwd.style.border= '3px solid green'
+              return true;
+              }    
+      
+}
+
+
+
+function validateEmail(){
+    // alert('hello')
+    if(email.value.trim()==''){
+     err1.innerText='Field cannot be empty';
+     email.style.border= '3px solid red'
+     return false
+    }
+    else if(!email.value.match(regex)){
+     err1.innerText='Email is not in correct format';
+     email.style.border= '3px solid red'
+     return false
+    }
+    else {
+     err1.innerText='';
+     email.style.border= '3px solid green'
+     return true
+    } 
+}
+
+function matchPass() {  
+ 
+    if (pwd.value.trim()=='') {
+        err4.innerText="Please enter a password first"
+        cpwd.style.border= '3px solid red'
+        return false;
+      }
+    
+      if (cpwd.value != pwd.value) {
+        err4.innerText='Passwords do not match';
+        cpwd.style.border= '3px solid red'
+        return false
+       // alert("Passwords do not match.");
+        
+      }
+      err4.innerText='';
+      cpwd.style.border= '3px solid green'
+      return true;
+    }
+   
+
+function myFunction() {
+    
+    if (pwd.type === "password") {
+      pwd.type = "text";
+      cpwd.type = "text";
+    } else {
+      pwd.type = "password";
+      cpwd.type = "password";
+    }
+  }
+
+  function checkPasswordStrength() {
+    var strengthIndicator = document.getElementById("password-strength");
+  
+
+    // Reset the indicator color
+    strengthIndicator.className = "";
+
+    if (pwd.value.match(strongRegExp)) {
+        strengthIndicator.innerText = "Strong";
+        strengthIndicator.className = "strong";
+    } else if (pwd.value.match(weakRegExp)) {
+      strengthIndicator.innerText = "Medium";
+      strengthIndicator.className = "medium";
+    } else if(pwd.value.match(poorRegExp)) {
+      strengthIndicator.innerText = "Weak";
+      strengthIndicator.className = "weak";
+    }
+    else if  (pwd.value.trim()==''){
+            
+            strengthIndicator.innerText = "";
+            strengthIndicator.className = "";
+        
+    }
+  }
+
+  
+  
+    
+  
+  
+  function validatePass2()
+  {
+      if(pwd2.value.trim()==''){
+          err5.innerText='Field cannot be empty';
+          pwd2.style.border= '3px solid red'
+          return false
+         }
+    
+         else if(!pwd2.value.match(passwordRegex)) {
+         err5.innerText='Enter Valid Password';
+         pwd2.style.border= '3px solid red'
+               
+              return false;
+                }
+              else
+                {
+                  err5.innerText='';
+                  pwd2.style.border= '3px solid green'
+                return true;
+                }    
+        
+  }
+  function validateEmail2(){
+    // alert('hello')
+    if(email2.value.trim()==''){
+     err1.innerText='Field cannot be empty';
+     email2.style.border= '3px solid red'
+     return false
+    }
+    else if(!email2.value.match(regex)){
+     err1.innerText='Email is not in correct format';
+     email2.style.border= '3px solid red'
+     return false
+    }
+    else {
+     err1.innerText='';
+     email2.style.border= '3px solid green'
+     return true
+    } 
+}
 
