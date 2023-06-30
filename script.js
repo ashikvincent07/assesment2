@@ -190,3 +190,45 @@ function myFunction() {
     } 
 }
 
+
+
+function submitCheck() {  
+ 
+  if (pwd.value.trim()=='' || cpwd.value.trim()=='' || email.value.trim()=='' || number.value.trim()=='') {
+      alert("Enter all fields")
+      return false;
+    }
+    else if(!pwd.value.match(passwordRegex) || cpwd.value != pwd.value || !email.value.match(regex) || !number.value.match(phoneno))
+   {
+    alert("Enter all fields in correct format")
+      return false
+     // alert("Passwords do not match.");
+      
+    }
+    else{
+
+      return true;
+    }
+   
+  }
+
+  function submitCheck2() {  
+ 
+    if (pwd2.value.trim()=='' || email2.value.trim()=='') {
+        alert("Enter all fields")
+        return false;
+      }
+      else if(!pwd2.value.match(passwordRegex) || !email2.value.match(regex))
+     {
+      alert("Enter Valid details")
+        return false
+       // alert("Passwords do not match.");
+        
+      }
+      else{
+  
+        return true;
+      }
+     
+    }
+
